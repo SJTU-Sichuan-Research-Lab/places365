@@ -11,6 +11,7 @@ import pickle
 net = None
 transformer = None
 
+
 def classify_scene(fpath_design, fpath_weights, fpath_labels, im):
     # initialize net
     global net, transformer
@@ -20,13 +21,14 @@ def classify_scene(fpath_design, fpath_weights, fpath_labels, im):
 
         # load input and configure preprocessing
         transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
-        transformer.set_mean('data', np.load('python/caffe/imagenet/ilsvrc_2012_mean.npy').mean(1).mean(1)) # TODO - remove hardcoded path
-        transformer.set_transpose('data', (2,0,1))
-        transformer.set_channel_swap('data', (2,1,0))
+        transformer.set_mean('data', np.load('python/caffe/imagenet/ilsvrc_2012_mean.npy').mean(1).mean(
+            1))  # TODO - remove hardcoded path
+        transformer.set_transpose('data', (2, 0, 1))
+        transformer.set_channel_swap('data', (2, 1, 0))
         transformer.set_raw_scale('data', 255.0)
 
         # since we classify only one image, we change batch size from 10 to 1
-        net.blobs['data'].reshape(1,3,227,227)
+        net.blobs['data'].reshape(1, 3, 227, 227)
 
     t0 = time.time()
     # print "start: " + str(t0)
@@ -76,6 +78,7 @@ def find_jpg_files(directory):
 
     return jpg_files
 
+
 if __name__ == '__main__':
 
     # fetch pretrained models
@@ -87,7 +90,6 @@ if __name__ == '__main__':
 
     # fetch image
     im = caffe.io.load_image(sys.argv[1])
-
 
     # predict
     classify_scene(fpath_design, fpath_weights, fpath_labels, im)
@@ -101,7 +103,7 @@ if __name__ == '__main__':
     # test_img_lst = glob.glob(pattern)
 
     # use changhong test data
-    test_changhong = test_dir + '/changhong_data' # fixme
+    test_changhong = test_dir + '/changhong_data'  # fixme
     test_img_lst = find_jpg_files(test_changhong)
 
     print "received " + str(len(test_img_lst)) + " images"
@@ -110,7 +112,7 @@ if __name__ == '__main__':
     cnt = 0
     output = []
     for img_pth in test_img_lst:
-        print cnt, "/" ,len(test_img_lst)
+        print cnt, "/", len(test_img_lst)
         cnt += 1
 
         img = caffe.io.load_image(img_pth)
@@ -120,7 +122,7 @@ if __name__ == '__main__':
             res_line += str(scene[0]) + " " + str(scene[1]) + " " + str(scene[2]) + "\n"
         res_line += "cost time: " + str(cost_time) + "s"
         output.append(res_line)
-    with open(test_dir+"/test_result_"+str(time.time())+".txt", 'w') as f:
+    with open(test_dir + "/test_result_" + str(time.time()) + ".txt", 'w') as f:
         for line in output:
             f.write(str(line))
             f.write("\n")
