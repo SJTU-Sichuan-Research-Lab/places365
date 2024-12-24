@@ -2,6 +2,7 @@
 .idea
 __pycache__
 *.pyc
+*.tar
 
 service/uploads
 service/data
