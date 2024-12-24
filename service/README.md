@@ -40,6 +40,12 @@ docker run -v "C:\Users\ycwei\PycharmProjects\nas\places365\service\data:/root/c
 
 ### Deployment
 ```bash
-docker run -d -v "C:\Users\ycwei\PycharmProjects\nas\places365\service\data:/root/caffe/data" -p 8888:8888 -e API_BASE="172.20.1.240:8888" --name scene scene_labeling -c start.sh
+docker run -d -v "C:\Users\ycwei\PycharmProjects\nas\places365\service\data:/root/caffe/data" -p 8888:8888 -e API_BASE="172.20.1.240:8888" --name scene scene_labeling python app.py
 ```
 Modify the -v, -p and -e options to achieve your custom deployment.
+
+
+if necessary
+```bash
+docker rm -f scene
+```
