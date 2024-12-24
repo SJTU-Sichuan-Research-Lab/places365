@@ -1,2 +1,9 @@
 .DS_Store
 .idea
+__pycache__
+
+service/uploads
+service/data
+service/logs
+service/models_places/*
+!service/models_places/README.md
