@@ -9,6 +9,7 @@ import json
 import numpy as np
 import sys
 import caffe
+import cv2
 
 net = None
 transformer = None
@@ -111,7 +112,12 @@ def serve(img_pth):
 
     # fetch image
     # todo use the image buffer directly
-    im = caffe.io.load_image(img_pth)
+    if img_pth.endswith(".bmp"):
+        im = cv2.imread(img_pth)
+        im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
+        im = im.astype(float) / 255.0
+    else:
+        im = caffe.io.load_image(img_pth)
 
     # predict
     return classify_scene(im)
