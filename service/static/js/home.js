@@ -148,13 +148,18 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
+        // Disable the button and show loading state
+        uploadButton.textContent = "Uploading...";  // Change text to indicate upload
+        uploadButton.classList.add("upload-loading");  // Optionally add a loading spinner
+        uploadButton.disabled = true;  // Disable the button to prevent further clicks
+
         // Loop over each image file and upload them one by one
-        Array.from(files).forEach((file, index) => {
+        const uploadPromises = Array.from(files).map((file, index) => {
             const formData = new FormData();
             formData.append("image", file);  // Append the single image file
 
             // Make a POST request to upload the file individually
-            fetch(`http://${apiBase}/nas/api/scene-recognition`, {
+            return fetch(`http://${apiBase}/nas/api/scene-recognition`, {
                 method: "POST",
                 body: formData,
             })
@@ -218,7 +223,17 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .catch(error => {
                 console.error("Error uploading image:", error);
+                alert("An error occurred while uploading your image. Please try again.");
             });
+        });
+        // Wait for all uploads to complete
+        Promise.all(uploadPromises).then(() => {
+            console.log("All images uploaded successfully");
+
+            // Re-enable the upload button and reset state
+            uploadButton.textContent = "Upload";  // Reset text
+            uploadButton.classList.remove("upload-loading");  // Remove loading spinner (if used)
+            uploadButton.disabled = false;  // Re-enable the button
         });
     });
 });
