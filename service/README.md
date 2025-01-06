@@ -40,7 +40,7 @@ docker run -v "C:\Users\ycwei\PycharmProjects\nas\places365\service\data:/root/c
 
 ### Deployment
 ```bash
-docker run -itd -v "C:\Users\ycwei\PycharmProjects\nas\places365\service\data:/root/caffe/data" -p 8888:8888 -e API_BASE="localhost:8888" --name scene scene_labeling:v2
+docker run --restart always -itd -v "C:\Users\ycwei\PycharmProjects\nas\places365\service\data:/root/caffe/data" -p 8888:8888 -e API_BASE="localhost:8888" --name scene scene_labeling:v2
 ```
 Modify the -v, -p and -e options to achieve your custom deployment.
 (API_BASE is just for local demonstration, as we now have an all-in-one frontend, it doesn't matter anymore.)
