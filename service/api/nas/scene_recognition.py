@@ -23,7 +23,7 @@ def allowed_file(filename):
 # Create the uploads folder if it doesn't exist
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-@nas_api.route('/nas/api/scene-recognition', methods=['POST'])
+@nas_api.route('/nas/api/v1/scene-labeling', methods=['POST'])
 def scene_recognition():
     print request
     if 'image' not in request.files:

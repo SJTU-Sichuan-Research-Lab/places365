@@ -5,6 +5,7 @@ __pycache__
 *.tar
 
 service/scripts/*
+!service/scripts/on-docker-start.sh
 service/uploads
 service/data
 service/logs

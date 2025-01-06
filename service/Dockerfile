@@ -1,5 +1,4 @@
 FROM floydhub/dl-docker:cpu
-MAINTAINER wyc
 
 # copy script and models_places dir into working directory
 COPY . /root/caffe
@@ -15,3 +14,7 @@ RUN pip install --trusted-host pypi.python.org --trusted-host pypi.org --trusted
 # clean up
 # RUN rm -rf matlab models js docker examples docs cmake data python src tools
 RUN rm INSTALL.md Dockerfile Makefile Makefile.config.example CMakeLists.txt LICENSE CONTRIBUTORS.md README.md
+
+
+# script on docker started
+CMD ["/bin/bash", "./scripts/on-docker-start.sh"]

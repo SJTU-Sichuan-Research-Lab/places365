@@ -24,7 +24,7 @@ with open(js_file_path, 'w') as file:
     file.write(content)
     file.close()
 
-@app.route('/')
+@app.route('/nas/scene-labeling/demo')
 def home():
     return render_template('index.html')
 

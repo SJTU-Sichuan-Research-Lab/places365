@@ -11,7 +11,7 @@ touch deploy_alexnet_places365.prototxt
 
 #### docker build
 ```bash
-docker build -t scene_labeling .
+docker build -t scene_labeling:v2 .
 ```
 
 #### docker run
@@ -34,15 +34,16 @@ docker rm -f $(docker ps -a -q)
 
 #### debug or dev
 ```bash
-docker run -v "C:\Users\ycwei\PycharmProjects\nas\places365\service\data:/root/caffe/data" -v "C:\Users\ycwei\PycharmProjects\nas\places365\service:/root/caffe/service" -p 8888:8888 scene_labeling python service/app.py
+docker run -v "C:\Users\ycwei\PycharmProjects\nas\places365\service\data:/root/caffe/data" -v "C:\Users\ycwei\PycharmProjects\nas\places365\service:/root/caffe/service" -p 8888:8888 scene_labeling:v2 python service/app.py
 ```
 
 
 ### Deployment
 ```bash
-docker run -d -v "C:\Users\ycwei\PycharmProjects\nas\places365\service\data:/root/caffe/data" -p 8888:8888 -e API_BASE="172.20.1.240:8888" --name scene scene_labeling python app.py
+docker run -itd -v "C:\Users\ycwei\PycharmProjects\nas\places365\service\data:/root/caffe/data" -p 8888:8888 -e API_BASE="localhost:8888" --name scene scene_labeling:v2
 ```
 Modify the -v, -p and -e options to achieve your custom deployment.
+(API_BASE is just for local demonstration, as we now have an all-in-one frontend, it doesn't matter anymore.)
 
 
 if necessary
